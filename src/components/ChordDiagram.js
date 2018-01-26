@@ -4,6 +4,7 @@ import styled, {extend} from 'styled-components'
 const ChordDiagramWrapper = styled.div`
   position:relative;
   padding:1.3rem;
+  transform:${props => props.status === 'previous' || props.status === 'next' ? 'scale(0.8)' : null};
 `
 const Fretboard = styled.div`
   position:relative;
@@ -135,32 +136,38 @@ class ChordDiagram extends Component {
 
   render() {
     return (
-      <ChordDiagramWrapper>
-        <ChordName>{this.props.chord.name}</ChordName>
-        <Fretboard rotated={this.state.rotated}>
-          <Frets>
-            <Fret/>
-            <Fret/>
-            <Fret/>
-          </Frets>
-          <Strings>
-            <String/>
-            <String/>
-            <String/>
-            <String/>
-            <String/>
-            <String/>
-          </Strings>
-          <Fingers>
-            {
-              this.props.chord.shape.map((fret, index) => {
-                return <Finger key={index} string={index} fret={fret} rotated={this.state.rotated}>{this.props.chord.fingers[index]}</Finger>
-              })
-            }
-          </Fingers>
-        </Fretboard>
-        <RotateButton href="#" onClick={this.rotateDiagram}>{this.state.rotated ? '↺' : '↻'}</RotateButton>
-      </ChordDiagramWrapper>
+      <div>
+        {
+          this.props.chord ?
+            <ChordDiagramWrapper status={this.props.status}>
+            <ChordName>{this.props.chord.name}</ChordName>
+            <Fretboard rotated={this.state.rotated}>
+              <Frets>
+                <Fret/>
+                <Fret/>
+                <Fret/>
+              </Frets>
+              <Strings>
+                <String/>
+                <String/>
+                <String/>
+                <String/>
+                <String/>
+                <String/>
+              </Strings>
+              <Fingers>
+                {
+                  this.props.chord.shape.map((fret, index) => {
+                    return <Finger key={index} string={index} fret={fret} rotated={this.state.rotated}>{this.props.chord.fingers[index]}</Finger>
+                  })
+                }
+              </Fingers>
+            </Fretboard>
+            <RotateButton href="#" onClick={this.rotateDiagram}>{this.state.rotated ? '↺' : '↻'}</RotateButton>
+          </ChordDiagramWrapper>
+          : null
+        }
+      </div>
     )
   }
 }

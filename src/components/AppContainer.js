@@ -18,7 +18,10 @@ class AppContainer extends Component {
       songData: null,
       chordsData: null,
       percentagePlayed: null,
-      currentChord: 'D'
+      currentTime: null,
+      currentChordIndex: 0,
+      prevChordIndex: null,
+      nextChordIndex: 1
     }
   }
 
@@ -54,6 +57,9 @@ class AppContainer extends Component {
       const playerTotalTime = player.getDuration()
       progressInterval = setInterval(() => {
         const playerCurrentTime = player.getCurrentTime()
+        this.setState({
+          currentTime: playerCurrentTime
+        })
         const percentagePlayed = (playerCurrentTime / playerTotalTime) * 100
         this.setState({percentagePlayed})
       }, 50)
@@ -62,16 +68,26 @@ class AppContainer extends Component {
     }
   }
 
+  updateCurrentChordIndeces = (currentChordIndex, prevChordIndex, nextChordIndex) => {
+    this.setState({
+      currentChordIndex,
+      prevChordIndex,
+      nextChordIndex
+    })
+  }
+
   render() {
     return (
       <div>
         {
           this.state.songData && this.state.chordsData ?
             <div>
-              <ChordsTrack chords={this.state.songData.song_events} percentagePlayed={this.state.percentagePlayed}/>
+              <ChordsTrack chords={this.state.songData.song_events} currentTime={this.state.currentTime} percentagePlayed={this.state.percentagePlayed} currentChordIndecesHandler={this.updateCurrentChordIndeces}/>
               <UniqueChords chords={this.state.songData.unique_chords} chordsData={this.state.chordsData}/>
               <YoutubeEmbed videoId={this.state.videoId} progressHandler={this.updateProgress}/>
-              <ChordDiagram chord={this.state.chordsData.find(chord => chord.name === this.state.currentChord)}/>
+              <ChordDiagram chord={this.state.chordsData.find(chord => this.state.songData.song_events[this.state.prevChordIndex] && chord.name === this.state.songData.song_events[this.state.prevChordIndex].name)} status="previous"/>
+              <ChordDiagram chord={this.state.chordsData.find(chord => this.state.songData.song_events[this.state.prevChordIndex] && chord.name === this.state.songData.song_events[this.state.currentChordIndex].name)} status="current"/>
+              <ChordDiagram chord={this.state.chordsData.find(chord => this.state.songData.song_events[this.state.prevChordIndex] && chord.name === this.state.songData.song_events[this.state.nextChordIndex].name)} status="next"/>
             </div>
           : <p>loading...</p>
         }

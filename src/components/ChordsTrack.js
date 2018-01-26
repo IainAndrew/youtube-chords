@@ -47,6 +47,8 @@ class ChordsTrack extends Component {
       this.setState({
         trackOffset: -((nextProps.percentagePlayed * this.state.trackLength / 100))
       })
+      const currentChordIndex = this.props.chords.findIndex(chord => chord.beat_time <= this.props.currentTime && (chord.beat_time + chord.duration) > this.props.currentTime)
+      this.props.currentChordIndecesHandler(currentChordIndex, currentChordIndex - 1, currentChordIndex + 1)
     }
   }
 
