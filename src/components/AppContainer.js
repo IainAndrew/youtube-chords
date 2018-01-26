@@ -6,6 +6,7 @@ import ChordsApi from './api/ChordsApi'
 import YoutubeEmbed from './YoutubeEmbed'
 import ChordsTrack from './ChordsTrack'
 import ChordDiagram from './ChordDiagram'
+import UniqueChords from './UniqueChords'
 
 let progressInterval
 
@@ -57,7 +58,7 @@ class AppContainer extends Component {
         this.setState({percentagePlayed})
       }, 50)
     } else {
-      clearInterval(progressInterval);
+      clearInterval(progressInterval)
     }
   }
 
@@ -65,15 +66,14 @@ class AppContainer extends Component {
     return (
       <div>
         {
-          this.state.songData ?
-            <ChordsTrack chords={this.state.songData.song_events} percentagePlayed={this.state.percentagePlayed}/>
+          this.state.songData && this.state.chordsData ?
+            <div>
+              <ChordsTrack chords={this.state.songData.song_events} percentagePlayed={this.state.percentagePlayed}/>
+              <UniqueChords chords={this.state.songData.unique_chords} chordsData={this.state.chordsData}/>
+              <YoutubeEmbed videoId={this.state.videoId} progressHandler={this.updateProgress}/>
+              <ChordDiagram chord={this.state.chordsData.find(chord => chord.name === this.state.currentChord)}/>
+            </div>
           : <p>loading...</p>
-        }
-        <YoutubeEmbed videoId={this.state.videoId} progressHandler={this.updateProgress}/>
-        {
-          this.state.chordsData ?
-            <ChordDiagram chord={this.state.currentChord} chordsData={this.state.chordsData}/>
-          : null
         }
       </div>
     )
