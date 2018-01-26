@@ -7,6 +7,23 @@ import YoutubeEmbed from './YoutubeEmbed'
 import ChordsTrack from './ChordsTrack'
 import ChordDiagram from './ChordDiagram'
 import UniqueChords from './UniqueChords'
+import ChordDiagramsCarousel from './ChordDiagramsCarousel'
+import Loader from './Loader'
+
+const StyledAppContainer = styled.div`
+  height:100vh;
+  h1,h2,h3,h4,h5,h6,p,div {
+    font-family:'Fira Sans';
+  }
+`
+const StyledAppContainerInner = styled.div`
+  height:100%;
+  display:flex;
+  flex-direction:column;
+`
+const YoutubeWrapper = styled.div`
+  flex:1;
+`
 
 let progressInterval
 
@@ -19,9 +36,7 @@ class AppContainer extends Component {
       chordsData: null,
       percentagePlayed: null,
       currentTime: null,
-      currentChordIndex: 0,
-      prevChordIndex: null,
-      nextChordIndex: 1
+      currentChordIndex: 0
     }
   }
 
@@ -68,30 +83,37 @@ class AppContainer extends Component {
     }
   }
 
-  updateCurrentChordIndeces = (currentChordIndex, prevChordIndex, nextChordIndex) => {
-    this.setState({
-      currentChordIndex,
-      prevChordIndex,
-      nextChordIndex
-    })
+  updateCurrentChordIndex = (currentChordIndex) => {
+    this.setState({currentChordIndex})
   }
 
   render() {
     return (
-      <div>
+      <StyledAppContainer>
         {
           this.state.songData && this.state.chordsData ?
-            <div>
-              <ChordsTrack chords={this.state.songData.song_events} currentTime={this.state.currentTime} percentagePlayed={this.state.percentagePlayed} currentChordIndecesHandler={this.updateCurrentChordIndeces}/>
-              <UniqueChords chords={this.state.songData.unique_chords} chordsData={this.state.chordsData}/>
+          <StyledAppContainerInner>
+            {/* <UniqueChords chords={this.state.songData.unique_chords} chordsData={this.state.chordsData}/> */}
+            <YoutubeWrapper>
               <YoutubeEmbed videoId={this.state.videoId} progressHandler={this.updateProgress}/>
-              <ChordDiagram chord={this.state.chordsData.find(chord => this.state.songData.song_events[this.state.prevChordIndex] && chord.name === this.state.songData.song_events[this.state.prevChordIndex].name)} status="previous"/>
-              <ChordDiagram chord={this.state.chordsData.find(chord => this.state.songData.song_events[this.state.prevChordIndex] && chord.name === this.state.songData.song_events[this.state.currentChordIndex].name)} status="current"/>
-              <ChordDiagram chord={this.state.chordsData.find(chord => this.state.songData.song_events[this.state.prevChordIndex] && chord.name === this.state.songData.song_events[this.state.nextChordIndex].name)} status="next"/>
-            </div>
-          : <p>loading...</p>
+              <ChordDiagramsCarousel 
+                chords={this.state.songData.song_events}
+                chordsData={this.state.chordsData}
+                currentChordIndex={this.state.currentChordIndex}
+              />
+            </YoutubeWrapper>
+            <ChordsTrack
+              chords={this.state.songData.song_events}
+              currentTime={this.state.currentTime}
+              percentagePlayed={this.state.percentagePlayed}
+              currentChordIndexHandler={this.updateCurrentChordIndex}
+              currentChordIndex={this.state.currentChordIndex}
+            />
+          </StyledAppContainerInner>
+          : null
         }
-      </div>
+        <Loader loading={!this.state.songData || !this.state.chordsData}/>
+      </StyledAppContainer>
     )
   }
 }
