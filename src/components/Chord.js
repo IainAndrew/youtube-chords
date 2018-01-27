@@ -10,8 +10,8 @@ const StyledChord = styled.div`
   border-right:2px solid ${colors.lightgrey};
   background:${props => (
     props.current ? 
-      `linear-gradient(${darken(0.2, colors.primary)}, ${darken(0.4, colors.primary)})`
-    : `linear-gradient(${colors.primary}, ${darken(0.2, colors.primary)})`
+    colors.secondaryGradient
+    : colors.primaryGradient
   )};
   display:inline-flex;
   align-items:center;
@@ -22,6 +22,8 @@ const StyledChord = styled.div`
   font-size:1.5em;
 `
 
-const Chord = ({chord, current}) => <StyledChord current={current} style={{width:Math.round(chord.duration * 100)}}>{chord.name}</StyledChord>
+const Chord = (props) => (
+  <StyledChord current={props.current} style={{width:Math.round(props.chord.duration * 100)}}>{props.chord.capoName || props.chord.name}</StyledChord>
+)
 
 export default Chord

@@ -1,3 +1,5 @@
+import {darken} from 'polished'
+
 export const colors = {
   purple: '#5444d2',
   orange: '#f28658',
@@ -12,5 +14,11 @@ export const colors = {
   },
   get bodyFont() {
     return this.grey;
+  },
+  get primaryGradient() {
+    return `linear-gradient(${this.primary}, ${darken(0.2, this.primary)})`
+  },
+  get secondaryGradient() {
+    return `linear-gradient(${this.secondary}, ${darken(0.2, this.secondary)})`
   }
 }

@@ -8,7 +8,8 @@ const StyledYoutube = styled(YouTube)`
 
 class YoutubeEmbed extends Component {
   onReady = (e) => {
-    e.target.playVideo()
+    // e.target.playVideo()
+    e.target.mute()
     // e.target.setPlaybackRate(0.5)
   }
   render() {

@@ -9,6 +9,7 @@ import ChordDiagram from './ChordDiagram'
 import UniqueChords from './UniqueChords'
 import ChordDiagramsCarousel from './ChordDiagramsCarousel'
 import Loader from './Loader'
+import Toolbar from './Toolbar'
 
 const StyledAppContainer = styled.div`
   height:100vh;
@@ -36,7 +37,9 @@ class AppContainer extends Component {
       chordsData: null,
       percentagePlayed: null,
       currentTime: null,
-      currentChordIndex: 0
+      currentChordIndex: 0,
+      capo: 0,
+      playbackSpeed: 1
     }
   }
 
@@ -87,6 +90,32 @@ class AppContainer extends Component {
     this.setState({currentChordIndex})
   }
 
+  updateCapo = (capo) => {
+    this.setState({capo})
+    const newEvents = this.state.songData.song_events.map(chord => {
+      this.state.chordsData.map(chordData => {
+        if (chord.name === chordData.name) {
+          chord.capoName = chordData.capo[capo] !== chord.name ? chordData.capo[capo] : undefined
+        }
+      })
+      return chord
+    })
+    this.setState({
+      songData: {
+        ...this.state.songData,
+        song_events: newEvents
+      }
+    })
+  }
+
+  updatePlaybackSpeed = (playbackSpeed) => {
+    this.setState({playbackSpeed})
+  }
+
+  updateVideoId = (videoId) => {
+    this.setState({videoId})
+  }
+
   render() {
     return (
       <StyledAppContainer>
@@ -94,6 +123,14 @@ class AppContainer extends Component {
           this.state.songData && this.state.chordsData ?
           <StyledAppContainerInner>
             {/* <UniqueChords chords={this.state.songData.unique_chords} chordsData={this.state.chordsData}/> */}
+            <Toolbar 
+              capo={this.state.capo}
+              capoHandler={this.updateCapo}
+              playbackSpeed={this.state.playbackSpeed}
+              playbackSpeedHandler={this.updatePlaybackSpeed}
+              videoId={this.state.videoId}
+              videoIdHandler={this.state.updateVideoId}
+            />
             <YoutubeWrapper>
               <YoutubeEmbed videoId={this.state.videoId} progressHandler={this.updateProgress}/>
               <ChordDiagramsCarousel 

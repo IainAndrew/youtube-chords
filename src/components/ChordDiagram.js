@@ -6,7 +6,6 @@ import {rgba} from 'polished'
 const ChordDiagramWrapper = styled.div`
   position:relative;
   padding:1rem 2rem;
-  // max-width:100%;
   width:16rem;
   transform:${props => props.isCurrent ? 'none' : 'scale(0.8)'};
   background:${props => props.isCurrent ? colors.white : rgba(colors.white, 0.7)};
@@ -23,7 +22,6 @@ const Fretboard = styled.div`
   border-radius:0.3em;
   transform:${props => props.rotated ? 'rotate(90deg)' : 'none'};
   transition:all 0.3s ease;
-  background-color:${colors.lightgrey};
   &:before {
     content:"";
     display:block;

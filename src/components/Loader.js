@@ -10,7 +10,7 @@ const StyledLoader = styled.div`
   left:0;
   width:100%;
   height:100%;
-  background:linear-gradient(${colors.primary}, ${darken(0.2, colors.primary)});
+  background:${colors.primaryGradient};
   color:${colors.white};
   animation:${props => props.loading ? null : `${fadeOut} 1s ease forwards 1s`};
   display:flex;

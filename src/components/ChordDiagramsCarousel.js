@@ -37,7 +37,7 @@ const ChordDiagramsCarousel = (props) => {
             return (
               <ChordDiagramCarouselItem key={chord.beat_time}>
                 <ChordDiagram 
-                  chord={props.chordsData.find(chordData => chordData.name === chord.name) || chord}
+                  chord={props.chordsData.find(chordData => chordData.name === (chord.capoName || chord.name)) || chord}
                   isCurrent={i === props.currentChordIndex}
                 />
               </ChordDiagramCarouselItem>

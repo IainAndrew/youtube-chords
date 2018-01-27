@@ -22,7 +22,7 @@ const Marker = styled.div`
   left:50%;
   width:3px;
   height:100%;
-  background:${colors.secondary};
+  background:${colors.primary};
 `
 
 class ChordsTrack extends Component {
@@ -59,7 +59,13 @@ class ChordsTrack extends Component {
       <StyledChordsTrackWrapper>
         <StyledChordsTrack width={this.state.trackLength} style={{transform: `translateX(${this.state.trackOffset}px)`}}>
           {
-            this.props.chords.map((chord, index) => <Chord key={chord.beat_time} chord={chord} current={index === this.props.currentChordIndex}/>)
+            this.props.chords.map((chord, index) => (
+              <Chord 
+                key={chord.beat_time}
+                chord={chord}
+                current={index === this.props.currentChordIndex}
+              />
+            ))
           }
         </StyledChordsTrack>
         <Marker/>
