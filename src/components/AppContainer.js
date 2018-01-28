@@ -154,7 +154,7 @@ class AppContainer extends Component {
     return (
       <StyledAppContainer>
         {
-          this.state.songData && this.state.chordsData ?
+          !this.state.loadingSong && this.state.songData && this.state.chordsData ?
           <StyledAppContainerInner>
             {/* <UniqueChords chords={this.state.songData.unique_chords} chordsData={this.state.chordsData}/> */}
             <Toolbar 
@@ -196,7 +196,7 @@ class AppContainer extends Component {
           </StyledAppContainerInner>
           : null
         }
-        <Loader loading={this.state.loadingApp}/>
+        <Loader loading={this.state.loadingApp || this.state.loadingSong}/>
       </StyledAppContainer>
     )
   }
