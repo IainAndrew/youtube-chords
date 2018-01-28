@@ -5,6 +5,7 @@ import styled from 'styled-components'
 const UniqueChordsWrapper = styled.div`
   display:flex;
   flex-wrap:wrap;
+  justify-content:center;
 `
 const UniqueChordWrapper = styled.div`
   flex:1;

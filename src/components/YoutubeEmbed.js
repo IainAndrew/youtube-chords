@@ -5,12 +5,18 @@ import styled from 'styled-components'
 const StyledYoutube = styled(YouTube)`
   display:block;
 `
-
+let youtubeInstance
 class YoutubeEmbed extends Component {
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.playbackSpeed !== this.props.playbackSpeed) {
+      youtubeInstance.setPlaybackRate(nextProps.playbackSpeed)
+    }
+  }
   onReady = (e) => {
+    youtubeInstance = e.target
     // e.target.playVideo()
-    e.target.mute()
-    // e.target.setPlaybackRate(0.5)
+    // e.target.mute()
+    e.target.setPlaybackRate(this.props.playbackSpeed)
   }
   render() {
     const options = {

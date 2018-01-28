@@ -6,7 +6,12 @@ class SongDataApi {
       method: 'GET',
     })
     return fetch(request).then((response) => {
-      return response.json()
+      if (response.status >= 200 && response.status < 300) {
+        return response.json()
+      } else {
+        var error = new Error(response.statusText || response.status)
+        return error
+      }
     }).catch((err) => {
       throw (err)
     })

@@ -5,8 +5,6 @@ import SongDataApi from './api/SongDataApi'
 import ChordsApi from './api/ChordsApi'
 import YoutubeEmbed from './YoutubeEmbed'
 import ChordsTrack from './ChordsTrack'
-import ChordDiagram from './ChordDiagram'
-import UniqueChords from './UniqueChords'
 import ChordDiagramsCarousel from './ChordDiagramsCarousel'
 import Loader from './Loader'
 import Toolbar from './Toolbar'
@@ -32,7 +30,10 @@ class AppContainer extends Component {
   constructor(props, context) {
     super(props)
     this.state = {
+      loadingApp: true,
+      loadingSong: false,
       videoId: 'oKsxPW6i3pM',
+      videoIdError: null,
       songData: null,
       chordsData: null,
       percentagePlayed: null,
@@ -44,15 +45,7 @@ class AppContainer extends Component {
   }
 
   componentDidMount() {
-
-    SongDataApi.getSongData(this.state.videoId).then(data => {
-      this.setState({
-        songData: data.song
-      })
-    }).catch(err => {
-      console.log(err)
-    })
-
+    this.getSongData()
     let chordsData = []
     ChordsApi.getChords().then(data => {
       data.chords.forEach(chord => {
@@ -66,7 +59,26 @@ class AppContainer extends Component {
     }).catch(err => {
       console.log(err)
     })
+  }
 
+  getSongData = () => {
+    this.setState({
+      loadingSong: true
+    })
+    SongDataApi.getSongData(this.state.videoId).then(data => {
+      this.setState({
+        songData: data.song,
+        capo: 0,
+        percentagePlayed: null,
+        currentTime: null,
+        playbackSpeed: 1,
+        currentChordIndex: 0,
+        loadingSong: false,
+        loadingApp: false
+      })
+    }).catch(err => {
+      console.log(err)
+    })
   }
 
   updateProgress = (e) => {
@@ -112,8 +124,30 @@ class AppContainer extends Component {
     this.setState({playbackSpeed})
   }
 
-  updateVideoId = (videoId) => {
-    this.setState({videoId})
+  extractYoutubeVideoId = (url) => {
+    let videoId = url.split('v=')[1]
+    if (!videoId) return new Error('Error: not a valid Youtube URL')
+    const ampersandPosition = videoId.indexOf('&')
+    if (ampersandPosition !== -1) {
+      videoId = videoId.substring(0, ampersandPosition)
+    }
+    return videoId;
+  }
+
+  updateVideoId = (url) => {
+    this.setState({
+      videoIdError: null
+    })
+    if (this.extractYoutubeVideoId(url) instanceof Error) {
+      return this.setState({
+        videoIdError: this.extractYoutubeVideoId(url)
+      })
+    }
+    this.setState({
+      videoId: this.extractYoutubeVideoId(url)
+    }, () => {
+      this.getSongData()
+    })
   }
 
   render() {
@@ -127,29 +161,42 @@ class AppContainer extends Component {
               capo={this.state.capo}
               capoHandler={this.updateCapo}
               playbackSpeed={this.state.playbackSpeed}
+              tempo={this.state.songData.tempo}
               playbackSpeedHandler={this.updatePlaybackSpeed}
+              uniqueChords={this.state.songData.unique_chords}
+              chordsData={this.state.chordsData}
               videoId={this.state.videoId}
-              videoIdHandler={this.state.updateVideoId}
+              videoIdHandler={this.updateVideoId}
+              videoIdError={this.state.videoIdError}
             />
             <YoutubeWrapper>
-              <YoutubeEmbed videoId={this.state.videoId} progressHandler={this.updateProgress}/>
+              <YoutubeEmbed 
+                videoId={this.state.videoId} 
+                progressHandler={this.updateProgress}
+                playbackSpeed={this.state.playbackSpeed}
+                playbackSpeedHandler={this.updatePlaybackSpeed}
+              />
               <ChordDiagramsCarousel 
                 chords={this.state.songData.song_events}
                 chordsData={this.state.chordsData}
                 currentChordIndex={this.state.currentChordIndex}
               />
             </YoutubeWrapper>
-            <ChordsTrack
-              chords={this.state.songData.song_events}
-              currentTime={this.state.currentTime}
-              percentagePlayed={this.state.percentagePlayed}
-              currentChordIndexHandler={this.updateCurrentChordIndex}
-              currentChordIndex={this.state.currentChordIndex}
-            />
+            {
+              !this.state.loadingSong ?
+                <ChordsTrack
+                  chords={this.state.songData.song_events}
+                  currentTime={this.state.currentTime}
+                  percentagePlayed={this.state.percentagePlayed}
+                  currentChordIndexHandler={this.updateCurrentChordIndex}
+                  currentChordIndex={this.state.currentChordIndex}
+                />
+              : null
+            }
           </StyledAppContainerInner>
           : null
         }
-        <Loader loading={!this.state.songData || !this.state.chordsData}/>
+        <Loader loading={this.state.loadingApp}/>
       </StyledAppContainer>
     )
   }
