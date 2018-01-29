@@ -14,8 +14,7 @@ class YoutubeEmbed extends Component {
   }
   onReady = (e) => {
     youtubeInstance = e.target
-    // e.target.playVideo()
-    // e.target.mute()
+    e.target.playVideo()
     e.target.setPlaybackRate(this.props.playbackSpeed)
   }
   render() {
@@ -23,7 +22,6 @@ class YoutubeEmbed extends Component {
       height: '100%',
       width: '100%',
       playerVars: {
-        controls: 0,
         modestbranding: 1,
         rel: 0
       }

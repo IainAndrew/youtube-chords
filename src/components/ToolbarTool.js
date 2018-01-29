@@ -10,11 +10,6 @@ const ToolbarTool = styled.li`
   &:not(:last-child) {
     border-right:1px solid ${darken(0.2, colors.primary)};
   }
-  @media (min-width:${breakpoints.medium}) {
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
-  }
   h6 {
     text-transform:uppercase;
     font-size:0.7em;

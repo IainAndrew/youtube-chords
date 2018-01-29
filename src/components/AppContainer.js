@@ -70,11 +70,6 @@ class AppContainer extends Component {
     SongDataApi.getSongData(this.state.videoId).then(data => {
       this.setState({
         songData: data.song,
-        capo: 0,
-        percentagePlayed: null,
-        currentTime: null,
-        playbackSpeed: 1,
-        currentChordIndex: 0,
         loadingSong: false,
         loadingApp: false
       })
@@ -146,7 +141,13 @@ class AppContainer extends Component {
       })
     }
     this.setState({
-      videoId: this.extractYoutubeVideoId(url)
+      videoId: this.extractYoutubeVideoId(url),
+      songData: null,
+      capo: 0,
+      percentagePlayed: null,
+      currentTime: null,
+      playbackSpeed: 1,
+      currentChordIndex: 0
     }, () => {
       this.getSongData()
     })
@@ -157,44 +158,44 @@ class AppContainer extends Component {
       <StyledAppContainer>
         {
           !this.state.loadingSong && this.state.songData && this.state.chordsData ?
-          <StyledAppContainerInner>
-            <Toolbar 
-              capo={this.state.capo}
-              capoHandler={this.updateCapo}
-              playbackSpeed={this.state.playbackSpeed}
-              tempo={this.state.songData.tempo}
-              playbackSpeedHandler={this.updatePlaybackSpeed}
-              uniqueChords={this.state.songData.unique_chords}
-              chordsData={this.state.chordsData}
-              videoId={this.state.videoId}
-              videoIdHandler={this.updateVideoId}
-              videoIdError={this.state.videoIdError}
-            />
-            <YoutubeWrapper>
-              <YoutubeEmbed 
-                videoId={this.state.videoId} 
-                progressHandler={this.updateProgress}
+            <StyledAppContainerInner>
+              <Toolbar 
+                capo={this.state.capo}
+                capoHandler={this.updateCapo}
                 playbackSpeed={this.state.playbackSpeed}
+                tempo={this.state.songData.tempo}
                 playbackSpeedHandler={this.updatePlaybackSpeed}
-              />
-              <ChordDiagramsCarousel 
-                chords={this.state.songData.song_events}
+                uniqueChords={this.state.songData.unique_chords}
                 chordsData={this.state.chordsData}
-                currentChordIndex={this.state.currentChordIndex}
+                videoId={this.state.videoId}
+                videoIdHandler={this.updateVideoId}
+                videoIdError={this.state.videoIdError}
               />
-            </YoutubeWrapper>
-            {
-              !this.state.loadingSong ?
-                <ChordsTrack
+              <YoutubeWrapper>
+                <YoutubeEmbed 
+                  videoId={this.state.videoId} 
+                  progressHandler={this.updateProgress}
+                  playbackSpeed={this.state.playbackSpeed}
+                  playbackSpeedHandler={this.updatePlaybackSpeed}
+                />
+                <ChordDiagramsCarousel 
                   chords={this.state.songData.song_events}
-                  currentTime={this.state.currentTime}
-                  percentagePlayed={this.state.percentagePlayed}
-                  currentChordIndexHandler={this.updateCurrentChordIndex}
+                  chordsData={this.state.chordsData}
                   currentChordIndex={this.state.currentChordIndex}
                 />
-              : null
-            }
-          </StyledAppContainerInner>
+              </YoutubeWrapper>
+              {
+                !this.state.loadingSong ?
+                  <ChordsTrack
+                    chords={this.state.songData.song_events}
+                    currentTime={this.state.currentTime}
+                    percentagePlayed={this.state.percentagePlayed}
+                    currentChordIndexHandler={this.updateCurrentChordIndex}
+                    currentChordIndex={this.state.currentChordIndex}
+                  />
+                : null
+              }
+            </StyledAppContainerInner>
           : null
         }
         <Loader loading={this.state.loadingApp || this.state.loadingSong}/>

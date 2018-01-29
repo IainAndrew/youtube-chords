@@ -60,7 +60,7 @@ class ToolbarChords extends Component {
           <h6>Chords</h6>
           {
             this.props.uniqueChords.map((uniqueChord, index) => (
-              <span key={index}>{uniqueChord}</span>
+              <span key={index}>{uniqueChord}{index !== this.props.uniqueChords.length - 1 ? ', ' : null}</span>
             ))
           }
         </a>
