@@ -15,6 +15,7 @@ const PlaybackSpeedButton = styled.a`
   background:${props => props.active ? colors.secondary : colors.white};
   border-radius:3px;
   font-size:0.8em;
+  text-align:center;
   &:hover, &:focus {
     color:${props => props.active ? colors.white : colors.bodyFont};
   }

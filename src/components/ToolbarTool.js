@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import {colors} from './Variables'
+import {colors, breakpoints} from './Variables'
 import {darken} from 'polished'
 
 const ToolbarTool = styled.li`
@@ -7,9 +7,13 @@ const ToolbarTool = styled.li`
   flex:1;
   background:${colors.primaryGradient};
   padding:1rem;
-  text-align:center;
   &:not(:last-child) {
     border-right:1px solid ${darken(0.2, colors.primary)};
+  }
+  @media (min-width:${breakpoints.medium}) {
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
   }
   h6 {
     text-transform:uppercase;
@@ -20,7 +24,6 @@ const ToolbarTool = styled.li`
   & > a {
     color:inherit;
     display:block;
-    text-align:center;
   }
 `
 

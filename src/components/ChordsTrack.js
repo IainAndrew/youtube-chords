@@ -7,7 +7,6 @@ import {darken} from 'polished'
 const StyledChordsTrackWrapper = styled.div`
   position:relative;
   width:100%;
-  background:linear-gradient(${colors.white}, ${darken(0.2, colors.white)});
   overflow:hidden;
   padding:0.5rem 0;
 `

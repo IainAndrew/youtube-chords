@@ -12,6 +12,7 @@ const ChordDiagramWrapper = styled.div`
   transition:all 0.3s ease;
   border-radius:0.5rem;
   color:${colors.bodyFont};
+  margin:0 auto;
 `
 const Fretboard = styled.div`
   position:relative;

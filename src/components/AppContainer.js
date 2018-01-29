@@ -21,7 +21,9 @@ const StyledAppContainerInner = styled.div`
   flex-direction:column;
 `
 const YoutubeWrapper = styled.div`
+  position:relative;
   flex:1;
+  overflow:hidden;
 `
 
 let progressInterval
@@ -126,7 +128,7 @@ class AppContainer extends Component {
 
   extractYoutubeVideoId = (url) => {
     let videoId = url.split('v=')[1]
-    if (!videoId) return new Error('Error: not a valid Youtube URL')
+    if (!videoId) return new Error('Error: Please enter a valid Youtube URL')
     const ampersandPosition = videoId.indexOf('&')
     if (ampersandPosition !== -1) {
       videoId = videoId.substring(0, ampersandPosition)
@@ -156,7 +158,6 @@ class AppContainer extends Component {
         {
           !this.state.loadingSong && this.state.songData && this.state.chordsData ?
           <StyledAppContainerInner>
-            {/* <UniqueChords chords={this.state.songData.unique_chords} chordsData={this.state.chordsData}/> */}
             <Toolbar 
               capo={this.state.capo}
               capoHandler={this.updateCapo}

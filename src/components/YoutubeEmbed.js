@@ -21,7 +21,12 @@ class YoutubeEmbed extends Component {
   render() {
     const options = {
       height: '100%',
-      width: '100%'
+      width: '100%',
+      playerVars: {
+        controls: 0,
+        modestbranding: 1,
+        rel: 0
+      }
     }
     return (
       <StyledYoutube

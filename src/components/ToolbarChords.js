@@ -14,7 +14,8 @@ const UniqueChordDiagramsWrapper = styled.div`
   padding:2rem;
   z-index:1;
   width:90%;
-  animation:${props => props.open ? `${fadeIn} 0.3s ease forwards` : `${fadeOut} 0.3s ease forwards`};
+  display:${props => props.open ? 'block' : 'none'};
+  /* animation:${props => props.open ? `${fadeIn} 0.3s ease forwards` : `${fadeOut} 0.3s ease forwards`}; */
 `
 const UniqueChordDiagramsCloseButton = styled.a`
   display:block;
