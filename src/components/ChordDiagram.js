@@ -93,7 +93,6 @@ const Finger = styled.div`
   top:${props => props.string === 0 ? '100%' : props.string === 1 ? '80%' : props.string === 2 ? '60%' : props.string === 3 ? '40%' : props.string === 4 ? '20%' : props.string === 5 ? '0' : null};
   margin-left:calc(-${fingerSize} / 2);
   margin-top:calc(-${fingerSize} / 2);
-  // display:${props => props.fret === 'x' ? 'none' : props.fret === '0' ? 'none': 'block'};
   text-align:center;
   line-height:${fingerSize};
   color:#fff;

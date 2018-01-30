@@ -15,7 +15,6 @@ class YoutubeEmbed extends Component {
   onReady = (e) => {
     youtubeInstance = e.target
     e.target.playVideo()
-    e.target.setPlaybackRate(this.props.playbackSpeed)
   }
   render() {
     const options = {

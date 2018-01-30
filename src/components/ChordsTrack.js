@@ -36,7 +36,7 @@ class ChordsTrack extends Component {
   componentWillMount() {
     let length = 0
     this.props.chords.map((chord, index) => {
-      length += Math.round(chord.duration * 100)
+      length += Math.round(chord.duration * 100) // add all chord lengths together to get length of chords track element
     })
     this.setState({
       trackLength: length
@@ -46,7 +46,7 @@ class ChordsTrack extends Component {
   componentWillReceiveProps(nextProps) {
     if (nextProps.percentagePlayed !== this.props.percentagePlayed) {
       this.setState({
-        trackOffset: -((nextProps.percentagePlayed * this.state.trackLength / 100))
+        trackOffset: -((nextProps.percentagePlayed * this.state.trackLength / 100)) // translate chords track as video plays
       })
       const currentChordIndex = this.props.chords.findIndex(chord => chord.beat_time <= this.props.currentTime && (chord.beat_time + chord.duration) > this.props.currentTime)
       this.props.currentChordIndexHandler(currentChordIndex)

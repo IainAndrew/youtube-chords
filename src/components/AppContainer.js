@@ -49,9 +49,9 @@ class AppContainer extends Component {
   componentDidMount() {
     this.getSongData()
     let chordsData = []
-    ChordsApi.getChords().then(data => {
+    ChordsApi.getChords().then(data => { // get chords data
       data.chords.forEach(chord => {
-        if (chord.instrument === 'Guitar') {
+        if (chord.instrument === 'Guitar') { // only guitar chords
           chordsData.push(chord)
         }
       })
@@ -67,7 +67,7 @@ class AppContainer extends Component {
     this.setState({
       loadingSong: true
     })
-    SongDataApi.getSongData(this.state.videoId).then(data => {
+    SongDataApi.getSongData(this.state.videoId).then(data => { // get song data
       this.setState({
         songData: data.song,
         loadingSong: false,
@@ -96,7 +96,7 @@ class AppContainer extends Component {
   }
 
   updateCurrentChordIndex = (currentChordIndex) => {
-    this.setState({currentChordIndex})
+    this.setState({currentChordIndex}) // index of the current active chord
   }
 
   updateCapo = (capo) => {
@@ -104,7 +104,7 @@ class AppContainer extends Component {
     const newEvents = this.state.songData.song_events.map(chord => {
       this.state.chordsData.map(chordData => {
         if (chord.name === chordData.name) {
-          chord.capoName = chordData.capo[capo] !== chord.name ? chordData.capo[capo] : undefined
+          chord.capoName = chordData.capo[capo] !== chord.name ? chordData.capo[capo] : undefined // add new capoName property
         }
       })
       return chord
@@ -150,6 +150,7 @@ class AppContainer extends Component {
         videoIdError: this.extractYoutubeVideoId(url)
       })
     }
+    // reset song state
     this.setState({
       videoId: this.extractYoutubeVideoId(url),
       songData: null,

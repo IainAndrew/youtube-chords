@@ -43,7 +43,8 @@ const ToolbarPlaybackSpeed = (props) => {
           ))
         }
       </PlaybackSpeedButtonGroup>
-      <span>Tempo: {(props.tempo * props.playbackSpeed).toFixed(0)} bpm</span>
+      {/* calculate new tempo */}
+      <span>Tempo: {(props.tempo * props.playbackSpeed).toFixed(0)} bpm</span> 
     </ToolbarTool>
   )
 }

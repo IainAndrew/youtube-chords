@@ -7857,7 +7857,7 @@ var _templateObject = _taggedTemplateLiteral(['\n  position:relative;\n  padding
     _templateObject5 = _taggedTemplateLiteral(['\n  top:50%;\n  height:85%;\n  transform:translateY(-50%);\n'], ['\n  top:50%;\n  height:85%;\n  transform:translateY(-50%);\n']),
     _templateObject6 = _taggedTemplateLiteral(['\n  position:absolute;\n  width:100%;\n  height:1px;\n  left:0;\n  background:currentColor;\n  &:first-child {\n    top:0;\n  }\n  &:nth-child(2) {\n    top:20%;\n  }\n  &:nth-child(3) {\n    top:40%;\n  }\n  &:nth-child(4) {\n    top:60%;\n  }\n  &:nth-child(5) {\n    top:80%;\n  }\n  &:nth-child(6) {\n    top:100%;\n  }\n'], ['\n  position:absolute;\n  width:100%;\n  height:1px;\n  left:0;\n  background:currentColor;\n  &:first-child {\n    top:0;\n  }\n  &:nth-child(2) {\n    top:20%;\n  }\n  &:nth-child(3) {\n    top:40%;\n  }\n  &:nth-child(4) {\n    top:60%;\n  }\n  &:nth-child(5) {\n    top:80%;\n  }\n  &:nth-child(6) {\n    top:100%;\n  }\n']),
     _templateObject7 = _taggedTemplateLiteral([''], ['']),
-    _templateObject8 = _taggedTemplateLiteral(['\n  position:absolute;\n  border-radius:50%;\n  background:', ';\n  width:', ';\n  height:', ';\n  left:', ';\n  top:', ';\n  margin-left:calc(-', ' / 2);\n  margin-top:calc(-', ' / 2);\n  // display:', ';\n  text-align:center;\n  line-height:', ';\n  color:#fff;\n  transition:transform 0.3s ease;\n  box-shadow:0 2px 5px ', ';\n  &.x, &.zero {\n    background:none;\n    box-shadow:none;\n    padding:0;\n    left:-', ';\n  }\n  &.x {\n    color:', ';\n  }\n  &.zero {\n    color:', ';\n  }\n'], ['\n  position:absolute;\n  border-radius:50%;\n  background:', ';\n  width:', ';\n  height:', ';\n  left:', ';\n  top:', ';\n  margin-left:calc(-', ' / 2);\n  margin-top:calc(-', ' / 2);\n  // display:', ';\n  text-align:center;\n  line-height:', ';\n  color:#fff;\n  transition:transform 0.3s ease;\n  box-shadow:0 2px 5px ', ';\n  &.x, &.zero {\n    background:none;\n    box-shadow:none;\n    padding:0;\n    left:-', ';\n  }\n  &.x {\n    color:', ';\n  }\n  &.zero {\n    color:', ';\n  }\n']),
+    _templateObject8 = _taggedTemplateLiteral(['\n  position:absolute;\n  border-radius:50%;\n  background:', ';\n  width:', ';\n  height:', ';\n  left:', ';\n  top:', ';\n  margin-left:calc(-', ' / 2);\n  margin-top:calc(-', ' / 2);\n  text-align:center;\n  line-height:', ';\n  color:#fff;\n  transition:transform 0.3s ease;\n  box-shadow:0 2px 5px ', ';\n  &.x, &.zero {\n    background:none;\n    box-shadow:none;\n    padding:0;\n    left:-', ';\n  }\n  &.x {\n    color:', ';\n  }\n  &.zero {\n    color:', ';\n  }\n'], ['\n  position:absolute;\n  border-radius:50%;\n  background:', ';\n  width:', ';\n  height:', ';\n  left:', ';\n  top:', ';\n  margin-left:calc(-', ' / 2);\n  margin-top:calc(-', ' / 2);\n  text-align:center;\n  line-height:', ';\n  color:#fff;\n  transition:transform 0.3s ease;\n  box-shadow:0 2px 5px ', ';\n  &.x, &.zero {\n    background:none;\n    box-shadow:none;\n    padding:0;\n    left:-', ';\n  }\n  &.x {\n    color:', ';\n  }\n  &.zero {\n    color:', ';\n  }\n']),
     _templateObject9 = _taggedTemplateLiteral(['\n  text-align:center;\n  text-transform:uppercase;\n'], ['\n  text-align:center;\n  text-transform:uppercase;\n']);
 
 var _react = __webpack_require__(0);
@@ -7898,9 +7898,7 @@ var Finger = _styledComponents2.default.div(_templateObject8, _Variables.colors.
   return props.fret === '1' ? '12.5%' : props.fret === '2' ? '37.5%' : props.fret === '3' ? '62.5%' : props.fret === '4' ? '87.5%' : null;
 }, function (props) {
   return props.string === 0 ? '100%' : props.string === 1 ? '80%' : props.string === 2 ? '60%' : props.string === 3 ? '40%' : props.string === 4 ? '20%' : props.string === 5 ? '0' : null;
-}, fingerSize, fingerSize, function (props) {
-  return props.fret === 'x' ? 'none' : props.fret === '0' ? 'none' : 'block';
-}, fingerSize, (0, _polished.rgba)('#000', 0.2), fingerSize, _Variables.colors.bodyFont, _Variables.colors.secondary);
+}, fingerSize, fingerSize, fingerSize, (0, _polished.rgba)('#000', 0.2), fingerSize, _Variables.colors.bodyFont, _Variables.colors.secondary);
 var ChordName = _styledComponents2.default.h4(_templateObject9);
 
 var ChordDiagram = function (_Component) {
@@ -25351,6 +25349,7 @@ var AppContainer = function (_Component) {
         loadingSong: true
       });
       _SongDataApi2.default.getSongData(_this.state.videoId).then(function (data) {
+        // get song data
         _this.setState({
           songData: data.song,
           loadingSong: false,
@@ -25379,7 +25378,7 @@ var AppContainer = function (_Component) {
     };
 
     _this.updateCurrentChordIndex = function (currentChordIndex) {
-      _this.setState({ currentChordIndex: currentChordIndex });
+      _this.setState({ currentChordIndex: currentChordIndex }); // index of the current active chord
     };
 
     _this.updateCapo = function (capo) {
@@ -25387,18 +25386,19 @@ var AppContainer = function (_Component) {
       var newEvents = _this.state.songData.song_events.map(function (chord) {
         _this.state.chordsData.map(function (chordData) {
           if (chord.name === chordData.name) {
-            chord.capoName = chordData.capo[capo] !== chord.name ? chordData.capo[capo] : undefined;
+            chord.capoName = chordData.capo[capo] !== chord.name ? chordData.capo[capo] : undefined; // add new capoName property
           }
         });
         return chord;
       });
       var newUniqueChords = _this.state.songData.unique_chords.map(function (chord) {
+        var newChord = void 0;
         _this.state.chordsData.map(function (chordData) {
           if (chord === chordData.name) {
-            chord = chordData.capo[capo];
+            newChord = chordData.capo[capo];
           }
         });
-        return chord;
+        return newChord;
       });
       _this.setState({
         songData: _extends({}, _this.state.songData, {
@@ -25431,6 +25431,7 @@ var AppContainer = function (_Component) {
           videoIdError: _this.extractYoutubeVideoId(url)
         });
       }
+      // reset song state
       _this.setState({
         videoId: _this.extractYoutubeVideoId(url),
         songData: null,
@@ -25468,8 +25469,10 @@ var AppContainer = function (_Component) {
       this.getSongData();
       var chordsData = [];
       _ChordsApi2.default.getChords().then(function (data) {
+        // get chords data
         data.chords.forEach(function (chord) {
           if (chord.instrument === 'Guitar') {
+            // only guitar chords
             chordsData.push(chord);
           }
         });
@@ -31223,7 +31226,7 @@ var SongDataApi = function () {
   _createClass(SongDataApi, null, [{
     key: 'getSongData',
     value: function getSongData(id) {
-      var proxyUrl = 'https://young-fjord-16053.herokuapp.com/'; // cors-anywhere instance
+      var proxyUrl = 'https://young-fjord-16053.herokuapp.com/'; // cors-anywhere instance (https://github.com/Rob--W/cors-anywhere)
       var targetUrl = 'https://play.riffstation.com/api/mir/songs?source=youtube&source_id=' + id;
       var request = new Request(proxyUrl + targetUrl, {
         method: 'GET'
@@ -31264,7 +31267,7 @@ var ChordsApi = function () {
   _createClass(ChordsApi, null, [{
     key: 'getChords',
     value: function getChords(id) {
-      var proxyUrl = 'https://young-fjord-16053.herokuapp.com/'; // cors-anywhere instance
+      var proxyUrl = 'https://young-fjord-16053.herokuapp.com/'; // cors-anywhere instance (https://github.com/Rob--W/cors-anywhere)
       var targetUrl = 'https://play.riffstation.com/api/mir/chords';
       var request = new Request(proxyUrl + targetUrl, {
         method: 'GET'
@@ -31339,7 +31342,6 @@ var YoutubeEmbed = function (_Component) {
     return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = YoutubeEmbed.__proto__ || Object.getPrototypeOf(YoutubeEmbed)).call.apply(_ref, [this].concat(args))), _this), _this.onReady = function (e) {
       youtubeInstance = e.target;
       e.target.playVideo();
-      e.target.setPlaybackRate(_this.props.playbackSpeed);
     }, _temp), _possibleConstructorReturn(_this, _ret);
   }
 
@@ -31444,7 +31446,7 @@ var ChordsTrack = function (_Component) {
     value: function componentWillMount() {
       var length = 0;
       this.props.chords.map(function (chord, index) {
-        length += Math.round(chord.duration * 100);
+        length += Math.round(chord.duration * 100); // add all chord lengths together to get length of chords track element
       });
       this.setState({
         trackLength: length
@@ -31457,7 +31459,7 @@ var ChordsTrack = function (_Component) {
 
       if (nextProps.percentagePlayed !== this.props.percentagePlayed) {
         this.setState({
-          trackOffset: -(nextProps.percentagePlayed * this.state.trackLength / 100)
+          trackOffset: -(nextProps.percentagePlayed * this.state.trackLength / 100) // translate chords track as video plays
         });
         var currentChordIndex = this.props.chords.findIndex(function (chord) {
           return chord.beat_time <= _this2.props.currentTime && chord.beat_time + chord.duration > _this2.props.currentTime;
