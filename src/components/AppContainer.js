@@ -110,12 +110,13 @@ class AppContainer extends Component {
       return chord
     })
     const newUniqueChords = this.state.songData.unique_chords.map(chord => {
+      let newChord
       this.state.chordsData.map(chordData => {
         if (chord === chordData.name) {
-          chord = chordData.capo[capo]
+          newChord = chordData.capo[capo]
         }
       })
-      return chord
+      return newChord
     })
     this.setState({
       songData: {

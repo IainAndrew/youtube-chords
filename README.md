@@ -27,6 +27,7 @@ This application allows a user to play a music video from YouTube and see the ch
 "webpack-dev-server": "^2.11.1"
 
 To install dependencies, run `npm install`.
+To run in a local environment with file watching and live reloading, run `npm run watch`
 
 ### Enhancements
 
@@ -38,3 +39,4 @@ Below are the enhancements I would have made if I had more time for the project.
 * Left handed chord diagrams
 * Ability to rotate chord diagrams depending on users preference
 * Ability to enter a playlist id
+* Add more unit tests
