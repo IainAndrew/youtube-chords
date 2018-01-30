@@ -2,7 +2,7 @@ import React from 'react'
 import { expect } from 'chai'
 import { configure, render } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
-import ChordsTrack from '../components/ChordsTrack'
+import ChordsTrack from '../src/components/ChordsTrack'
 
 configure({ adapter: new Adapter() })
 
