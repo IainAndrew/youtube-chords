@@ -17,8 +17,11 @@ const ToolbarList = styled.ul`
   list-style:none;
   width:100%;
   display:${props => props.showing ? 'block' : 'none'};
+  position:absolute;
+  z-index:1;
   @media (min-width:${breakpoints.medium}) {
     display:flex;
+    position:relative;
   }
   li {
     flex:1;

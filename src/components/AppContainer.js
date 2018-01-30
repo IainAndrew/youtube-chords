@@ -109,10 +109,19 @@ class AppContainer extends Component {
       })
       return chord
     })
+    const newUniqueChords = this.state.songData.unique_chords.map(chord => {
+      this.state.chordsData.map(chordData => {
+        if (chord === chordData.name) {
+          chord = chordData.capo[capo]
+        }
+      })
+      return chord
+    })
     this.setState({
       songData: {
         ...this.state.songData,
-        song_events: newEvents
+        song_events: newEvents,
+        uniqueChordWithCapo: newUniqueChords
       }
     })
   }
@@ -165,7 +174,7 @@ class AppContainer extends Component {
                 playbackSpeed={this.state.playbackSpeed}
                 tempo={this.state.songData.tempo}
                 playbackSpeedHandler={this.updatePlaybackSpeed}
-                uniqueChords={this.state.songData.unique_chords}
+                uniqueChords={this.state.songData.uniqueChordWithCapo || this.state.songData.unique_chords}
                 chordsData={this.state.chordsData}
                 videoId={this.state.videoId}
                 videoIdHandler={this.updateVideoId}

@@ -21,7 +21,6 @@ const Fretboard = styled.div`
   border:2px solid;
   border-left:0.6em solid;
   border-radius:0.3em;
-  transform:${props => props.rotated ? 'rotate(90deg)' : 'none'};
   transition:all 0.3s ease;
   &:before {
     content:"";
@@ -98,7 +97,6 @@ const Finger = styled.div`
   text-align:center;
   line-height:${fingerSize};
   color:#fff;
-  transform:${props => props.rotated ? 'rotate(-90deg)' : 'none'};
   transition:transform 0.3s ease;
   box-shadow:0 2px 5px ${rgba('#000', 0.2)};
   &.x, &.zero {
@@ -120,19 +118,12 @@ const ChordName = styled.h4`
 `;
 
 class ChordDiagram extends Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      rotated: false
-    }
-  }
-
   render() {
     return (
       <div>
         <ChordDiagramWrapper isCurrent={this.props.isCurrent}>
           <ChordName>{this.props.chord.name}</ChordName>
-          <Fretboard rotated={this.props.rotated}>
+          <Fretboard>
             <Frets>
               <Fret/>
               <Fret/>
@@ -155,7 +146,6 @@ class ChordDiagram extends Component {
                         key={index}
                         string={index}
                         fret={fret}
-                        rotated={this.props.rotated}
                         className={fret === 'x' ? 'x' : fret === '0' ? 'zero' : undefined}
                       >
                         {fret === 'x' ? '×' : fret === '0' ? 'o' : this.props.chord.fingers[index]}
